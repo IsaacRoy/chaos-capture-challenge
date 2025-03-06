@@ -109,14 +109,14 @@ const FloatingDistractions: React.FC<FloatingDistractionsProps> = ({ count = 10 
         id: index,
         emoji: randomEmoji,
         style: {
-          position: 'fixed',
+          position: 'fixed' as const,
           left: `${Math.random() * 90}vw`,
           top: `${Math.random() * 90}vh`,
           fontSize: `${Math.random() * 2 + 1.5}rem`,
           transform: `rotate(${Math.random() * 360}deg)`,
           animationDelay: `${Math.random() * 2}s`,
           animationDuration: `${Math.random() * 4 + 2}s`,
-        },
+        } as React.CSSProperties,
       };
     });
     
@@ -132,7 +132,7 @@ const FloatingDistractions: React.FC<FloatingDistractionsProps> = ({ count = 10 
             left: `${Math.random() * 90}vw`,
             top: `${Math.random() * 90}vh`,
             transform: `rotate(${Math.random() * 360}deg)`,
-          }
+          } as React.CSSProperties,
         }))
       );
     }, 8000);
@@ -157,7 +157,7 @@ const FloatingDistractions: React.FC<FloatingDistractionsProps> = ({ count = 10 
         <FloatingObject 
           key={obj.id}
           emoji={obj.emoji}
-          style={obj.style as React.CSSProperties}
+          style={obj.style}
           onClick={() => playRandomSound()}
         />
       ))}
