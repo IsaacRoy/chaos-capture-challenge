@@ -3,8 +3,6 @@
 
 A deliberately frustrating login experience that showcases various UI/UX anti-patterns. This project is designed to demonstrate what NOT to do when creating user interfaces, while being entertaining at the same time.
 
-![Annoying Login Demo](https://placeholder.com/wp-content/uploads/2018/10/placeholder.png)
-
 ## Implemented Anti-Patterns & Dark Patterns
 
 This project intentionally implements several anti-patterns and dark patterns:
@@ -72,6 +70,4 @@ This project serves as:
 - **ErrorMessages**: Popup error messages with unhelpful content
 - **SuccessMessage**: Celebration screen shown if login succeeds
 
-## License
 
-MIT License
