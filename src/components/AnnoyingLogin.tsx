@@ -3,6 +3,7 @@ import React, { useState, useEffect } from 'react';
 import MovingForm from './MovingForm';
 import FloatingDistractions from './FloatingBanana';
 import ErrorMessage from './ErrorMessages';
+import SuccessMessage from './SuccessMessage';
 import { playRandomSound } from '../assets/sounds';
 
 const AnnoyingLogin: React.FC = () => {
@@ -11,9 +12,14 @@ const AnnoyingLogin: React.FC = () => {
   const [showSystemUpdate, setShowSystemUpdate] = useState(false);
   const [updateProgress, setUpdateProgress] = useState(0);
   const [backgroundMode, setBackgroundMode] = useState<'swirl' | 'color'>('color');
+  const [loginSuccess, setLoginSuccess] = useState(false);
   
   // Timer countdown effect
   useEffect(() => {
+    if (loginSuccess) {
+      return; // Don't reset if login was successful
+    }
+    
     if (timeLeft <= 0) {
       // Reset the page when time runs out
       window.location.reload();
@@ -25,10 +31,12 @@ const AnnoyingLogin: React.FC = () => {
     }, 1000);
     
     return () => clearInterval(timer);
-  }, [timeLeft]);
+  }, [timeLeft, loginSuccess]);
   
   // Random popup effects
   useEffect(() => {
+    if (loginSuccess) return; // Don't show popups after success
+    
     // Schedule popups every 10-15 seconds
     const popupInterval = setInterval(() => {
       const popupType = Math.floor(Math.random() * 3);
@@ -50,7 +58,7 @@ const AnnoyingLogin: React.FC = () => {
     }, Math.random() * 5000 + 10000);
     
     return () => clearInterval(popupInterval);
-  }, []);
+  }, [loginSuccess]);
   
   // System update progress effect
   useEffect(() => {
@@ -82,8 +90,16 @@ const AnnoyingLogin: React.FC = () => {
   }, [showSystemUpdate]);
   
   const handleLoginSubmit = () => {
-    // Show error message on form submit
-    setShowError(true);
+    // Random chance of successful login (20%)
+    const loginChance = Math.random();
+    
+    if (loginChance > 0.8) {
+      setLoginSuccess(true);
+      playRandomSound();
+    } else {
+      // Show error message on form submit
+      setShowError(true);
+    }
   };
   
   const handleCloseError = () => {
@@ -118,6 +134,10 @@ const AnnoyingLogin: React.FC = () => {
       </div>
     );
   };
+  
+  if (loginSuccess) {
+    return <SuccessMessage />;
+  }
   
   return (
     <div 
